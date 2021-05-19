@@ -1,0 +1,1 @@
+/mnt/e/repos/rust-learn/basic/ownership/target/debug/ownership: /mnt/e/repos/rust-learn/basic/ownership/src/main.rs /mnt/e/repos/rust-learn/basic/ownership/src/reference.rs /mnt/e/repos/rust-learn/basic/ownership/src/slice.rs
