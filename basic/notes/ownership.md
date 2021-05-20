@@ -276,7 +276,7 @@ fn reference_3() {
 }
 ```
 
-都是错误的，但是如下这种写法是可行的：
+都是错误的，但是下面这种写法是可行的：
 
 ```rust
 fn mut_reference() {
@@ -288,7 +288,7 @@ fn mut_reference() {
 }
 ```
 
-因为 `r1` 是放在一个花括号里面的，花括号会创建一个执行域，在这个域里面只存在一个 `s` 的可变引用，当花括号执行结束时，`r1` 会被回收，因此创建 `r2` 时不会产生错误。
+因为 `r1` 是放在一个花括号里面，花括号会创建一个执行域，在这个域里面只存在一个 `s` 的可变引用，当花括号执行结束时，`r1` 会被回收，因此创建 `r2` 时不会产生错误。
 
 形如下面的这种写法也是正确的：
 
@@ -306,7 +306,7 @@ fn main() {
 }
 ```
 
-**注意：如下写法是错误的：**
+**注意，如下写法是错误的：**
 
 ```rust
 fn main() {
@@ -321,7 +321,7 @@ fn main() {
 }
 ```
 
-官方解释是这样的：
+官方解释的是这样：
 
 > The scopes of the immutable references `r1` and `r2` end after the `println!` where they are last used, which is before the mutable reference `r3` is created. These scopes don’t overlap, so this code is allowed.
 
@@ -426,4 +426,25 @@ fn main() {
 }
 ```
 
- 
+如果把 `first_word` 定义成这样：`fn first_word(s: &str) -> &str {`，则：
+
+```rust
+fn main() {
+    let my_string = String::from("hello world");
+
+    // first_word works on slices of `String`s
+    let word = first_word(&my_string[..]);
+
+    let my_string_literal = "hello world";
+
+    // first_word works on slices of string literals
+    let word = first_word(&my_string_literal[..]);
+
+    // Because string literals *are* string slices already,
+    // this works too, without the slice syntax!
+    let word = first_word(my_string_literal);
+}
+```
+
+> More: [Slices]([The Slice Type - The Rust Programming Language (rust-lang.org)](https://doc.rust-lang.org/book/ch04-03-slices.html#string-literals-are-slices))
+
