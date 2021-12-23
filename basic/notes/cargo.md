@@ -1,6 +1,6 @@
 # 使用 Cargo 管理 rust 项目
 
-> [Hello, Cargo]([Hello, Cargo! - The Rust Programming Language (rust-lang.org)](https://doc.rust-lang.org/book/ch01-03-hello-cargo.html))
+> [Hello, Cargo! - The Rust Programming Language (rust-lang.org)](https://doc.rust-lang.org/book/ch01-03-hello-cargo.html)
 
 ## 1. Create a new project
 

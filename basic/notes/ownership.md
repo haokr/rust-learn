@@ -1,6 +1,6 @@
 # Ownership
 
-> [What is ownership]([What is Ownership? - The Rust Programming Language (rust-lang.org)](https://doc.rust-lang.org/book/ch04-01-what-is-ownership.html))
+> [What is Ownership? - The Rust Programming Language (rust-lang.org)](https://doc.rust-lang.org/book/ch04-01-what-is-ownership.html)
 
 > Keeping track of what parts of code are using what data on the heap, minimizing the amount of duplicate data on the heap, and cleaning up unused data on the heap so you don’t run out of space are all problems that ownership addresses. 
 
@@ -102,7 +102,7 @@ let s2 = s1.clone();
 println!("s1 = {}, s2 = {}.", s1, s2);
 ```
 
-当要执行**deep copy**操作时，需要调用 `clone` 方法。
+当要执行 **deep copy** 操作时，需要调用 `clone` 方法。
 
 当赋值的对象是保存在栈内存中的简单数据类型时，直接使用 `=` 即可：
 
@@ -202,9 +202,9 @@ fn calculate_length(s: String) -> (String, usize) {
 
 另外为避免重复回收的问题，当执行类似 `let s2 = s1;` 的操作时，如果 `s1` 时指向堆内存的变量，则会将 `s2` 指向 `s1` 指向的堆内存，并清除 `s1` 的指针，这样同样会导致 `s1` 变量不可用。
 
-如果变量是诸如 `i32`等简单类型，在赋值和传参时会直接复制，因此不会存在上述问题。
+如果变量是诸如 `i32` 等简单类型，在赋值和传参时会直接复制，因此不会存在上述问题。
 
-## [Reference and borrowing]([References and Borrowing - The Rust Programming Language (rust-lang.org)](https://doc.rust-lang.org/book/ch04-02-references-and-borrowing.html))
+## Reference and borrowing([References and Borrowing - The Rust Programming Language (rust-lang.org)](https://doc.rust-lang.org/book/ch04-02-references-and-borrowing.html))
 
 那有没有更好的写法呢？答案是有的，看下面的代码：
 
@@ -229,7 +229,7 @@ fn calculate_length(s: &String)-> usize {
 >
 >First, notice that all the tuple code in the variable declaration and the function return value is gone. Second, note that we pass `&s1` into `calculate_length` and, in its definition, we take `&String` rather than `String`.
 
-<img src="E:\repos\rust-learn\basic\notes\img\image-20210519184418031.png" alt="image-20210519184418031" style="zoom:80%;" />
+<img src=".\img\image-20210519184418031.png" alt="image-20210519184418031" style="zoom:80%;" />
 
 相当于在 `calcuate_length` 方法中新声明了一个 变量 `s`，`s` 中的指针指向变量 `s1`（但不拥有 `s1`），因此当方法执行结束回收变量 `s` 不会对主方法中的变量 `s1` 造成影响。变量 `s` 是 `s1` 的一个引用。
 
@@ -354,7 +354,7 @@ let hello = &s[0..5];
 let world = &s[6..11];
 ```
 
-<img src="E:\repos\rust-learn\basic\notes\img\image-20210519224120240.png" alt="image-20210519224120240" style="zoom:80%;" />
+<img src=".\img\image-20210519224120240.png" alt="image-20210519224120240" style="zoom:80%;" />
 
 当切片包含第一个元素或最后一个元素时的简略写法：
 
