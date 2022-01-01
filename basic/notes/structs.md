@@ -165,3 +165,19 @@ fn main() {
 }
 ```
 
+## Associated Function
+
+```rust
+impl Rectangle {
+    fn square(size: u32) -> Rectangle {
+        Rectangle {
+            width: size,
+            height: size
+        }
+    }
+}
+
+fn main() {
+    Rectangle::square(10);
+}
+```

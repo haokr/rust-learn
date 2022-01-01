@@ -9,6 +9,9 @@ fn main() {
     };
 
     println!("The area of the rectangle is {} square pixels.", rec1.cal_area());
+
+    let rec2 = Rectangle2::square(10);
+    println!("The square rectangle is {:#?}", rec2);
 }
 
 fn main1() {
