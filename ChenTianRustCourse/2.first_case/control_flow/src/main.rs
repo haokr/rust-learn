@@ -35,12 +35,16 @@ fn fib_for(n: u8) {
     let (mut a, mut b) = (1, 1);
 
     for _i in 2..n+1 {
-        let c = a + b;
-        a = b;
-        b = c;
+        cal_fib(&mut a, &mut b);
 
         println!("netxt val is {}", b);
     }
+}
+
+fn cal_fib(a: &mut u8, b: &mut u8) {
+    let c = *a + *b;
+    *a = *b;
+    *b = c;
 }
 
 fn main() {
