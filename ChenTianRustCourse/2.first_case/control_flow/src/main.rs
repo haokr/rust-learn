@@ -33,10 +33,8 @@ fn fib_while(n :u8) {
 
 fn fib_for(n: u8) {
     let (mut a, mut b) = (1, 1);
-
     for _i in 2..n+1 {
         cal_fib(&mut a, &mut b);
-
         println!("netxt val is {}", b);
     }
 }
