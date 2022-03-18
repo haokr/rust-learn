@@ -13,11 +13,11 @@ message Resize {
     uint32 height = 2;
 
     enum ResizeType {
-        NOTMAL = 0;
+        NORMAL = 0;
         SEAM_CARVE = 1;
     }
 
-    Resize rtype = 3;
+    ResizeType rtype = 3;
 
     enum SampleFilter {
         UNDEFINED = 0;

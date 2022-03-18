@@ -11,8 +11,8 @@ pub struct Resize {
     pub width: u32,
     #[prost(uint32, tag="2")]
     pub height: u32,
-    #[prost(message, optional, boxed, tag="3")]
-    pub rtype: ::core::option::Option<::prost::alloc::boxed::Box<Resize>>,
+    #[prost(enumeration="resize::ResizeType", tag="3")]
+    pub rtype: i32,
     #[prost(enumeration="resize::SampleFilter", tag="4")]
     pub filter: i32,
 }
@@ -21,7 +21,7 @@ pub mod resize {
     #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
     #[repr(i32)]
     pub enum ResizeType {
-        Notmal = 0,
+        Normal = 0,
         SeamCarve = 1,
     }
     #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
