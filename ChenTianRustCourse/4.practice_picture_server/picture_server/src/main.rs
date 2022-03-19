@@ -78,12 +78,20 @@ async fn generate(
         .await
         .map_err(|_| StatusCode::BAD_REQUEST)?;
 
-    // TODO 处理图片
+    // 处理图片
+    let mut engine: Photon = data
+        .try_into()
+        .map_err(|_| StatusCode::INTERNAL_SERVER_ERROR)?;
+
+    engine.apply(&spec.specs);
+
+    let image = engine.generate(ImageOutputFormat::Jpeg(85));
+    info!("Finished processing: image size: {}", image.len());
 
     let mut headers = HeaderMap::new();
     headers.insert("content-type", HeaderValue::from_static("image/jpeg"));
 
-    Ok((headers, data.to_vec()))
+    Ok((headers, image))
 }
 
 #[instrument(level = "info", skip(cache))]
