@@ -5,15 +5,15 @@ use bytes::Bytes;
 use image::{DynamicImage, ImageBuffer, ImageOutputFormat};
 use lazy_static::lazy_static;
 use photon_rs:: {
-    effects, filters, multiple, native::open_image_form_bytes, transform, PhotonImage,
+    effects, filters, multiple, native::open_image_from_bytes, transform, PhotonImage,
 };
-use std::convert::TryForm;
+use std::convert::TryFrom;
 
 lazy_static! {
     // 有v先把水印文件加载为静态变量
-    static red WATERMARK: PhotonImage = {
+    static ref WATERMARK: PhotonImage = {
         // 编译的时候 include_bytes! 宏会把文件读入编译后的二进制
-        let data = include_bytes!("../../rest-logo.png");
+        let data = include_bytes!("../../rust-logo.png");
         let watermark = open_image_from_bytes(data).unwrap();
         transform::resize(&watermark, 64, 64, transform::SamplingFilter::Nearest)
     };
@@ -34,10 +34,10 @@ impl Engine for Photon {
     fn apply(&mut self, specs: &[Spec]) {
         for spec in specs.iter() {
             match spec.data {
-                Some(spec::Data::Crop(ref v)) => self.transforn(v),
+                Some(spec::Data::Crop(ref v)) => self.transform(v),
                 Some(spec::Data::Contrast(ref v)) => self.transform(v),
                 Some(spec::Data::Filter(ref v)) => self.transform(v),
-                Some(spec::Data::Filph(ref v)) => self.transform(v),
+                Some(spec::Data::Fliph(ref v)) => self.transform(v),
                 Some(spec::Data::Flipv(ref v)) => self.transform(v),
                 Some(spec::Data::Resize(ref v)) => self.transform(v),
                 Some(spec::Data::Watermark(ref v)) => self.transform(v),
@@ -53,7 +53,7 @@ impl Engine for Photon {
 
 impl SpecTransform<&Crop> for Photon {
     fn transform(&mut self, op: &Crop) {
-        let img = transform::Crop(&mut self.0, op.x1, op.x2, op.y2);
+        let img = transform::crop(&mut self.0, op.x1, op.y1, op.x2, op.y2);
         self.0 = img
     }
 }

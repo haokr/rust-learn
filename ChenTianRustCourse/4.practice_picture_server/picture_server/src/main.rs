@@ -22,8 +22,11 @@ use tracing::{info, instrument};
 
 // 引入 protobuf 生成的代码
 mod pb;
-
 use pb::*;
+
+mod engine;
+use engine::{Engine, Photon};
+use image::ImageOutputFormat;
 
 #[derive(Deserialize)]
 struct Params {
