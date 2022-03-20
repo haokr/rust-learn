@@ -10,6 +10,9 @@ name = "dialect"
 [[example]]
 name = "covid"
 
+[[example]]
+name = "covid2"
+
 [dependencies]
 anyhow = "1"    # 错误处理
 async-trait = "0.1"     # 允许 trait 里有 async fn
