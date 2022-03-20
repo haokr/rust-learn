@@ -1,4 +1,5 @@
 use sqlparser::dialect::Dialect;
+use crate::PROXY_URL_PREFIX;
 
 #[derive(Debug, Default)]
 pub struct TyrDialect;
@@ -20,10 +21,10 @@ impl Dialect for TyrDialect {
 
 /// 测试辅助函数
 pub fn example_sql() -> String {
-    let url = "http://raw.githubsercontent.com/owid/covid-19-data/master/public/data/latest/owid-covid-latest.csv";
+    let url = format!("{}{}", PROXY_URL_PREFIX, "https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/latest/owid-covid-latest.csv");
 
     let sql = format!(
-        "SELECT location name, total_cases, new_cases, total_deaths, new_death \
+        "SELECT location name, total_cases, new_cases, total_deaths, new_deaths \
         FROM {} where new_deaths >= 500 ORDER BY new_cases DESC LIMIT 6 OFFSET 5", 
         url
     );

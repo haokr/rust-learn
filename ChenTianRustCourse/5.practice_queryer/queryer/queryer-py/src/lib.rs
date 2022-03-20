@@ -20,6 +20,7 @@ pub fn query(sql: &str, output: Option<&str>) -> PyResult<String> {
     }
 }
 
+#[pymodule]
 fn queryer_py(_py: Python, m: &PyModule) -> PyResult<()> {
     m.add_function(wrap_pyfunction!(query, m)?)?;
     m.add_function(wrap_pyfunction!(example_sql, m)?)?;

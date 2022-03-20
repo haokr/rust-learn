@@ -2,7 +2,7 @@ use anyhow::{anyhow, Result};
 use polars::prelude::*;
 use sqlparser::parser::Parser;
 use std::convert::TryInto;
-use std::ops::{Deref, DerefMut};
+use std::ops::{Deref};
 use tracing::info;
 
 mod convert;
