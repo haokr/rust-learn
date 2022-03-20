@@ -1,6 +1,6 @@
 [workspace]
 
 members = [
-    "queryer-lib",
+    "queryer",
     "queryer-py"
 ]
