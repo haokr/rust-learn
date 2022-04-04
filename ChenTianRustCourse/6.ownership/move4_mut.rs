@@ -5,6 +5,7 @@ fn main() {
     println!("data[0]: {:p}", &data[0]);
 
     // mutable borrow
+    // fix: 把这段 for 循环代码，放到最后或最前
     for i in 0..100 {
         data.push(i);
     }
