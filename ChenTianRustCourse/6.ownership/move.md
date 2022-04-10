@@ -48,3 +48,12 @@ fn foo(a: &mut i32) {
 For more information on Rust's ownership system, take a look at the [References & Borrowing][references-and-borrowing] section of the Book.
 
 [references-and-borrowing]: https://doc.rust-lang.org/book/ch04-02-references-and-borrowing.html
+
+---
+
+The Rules of References  
+
+Let’s recap what we’ve discussed about references:
+
+- At any given time, you can have either one mutable reference or any number of immutable   references.
+- References must always be valid.  
