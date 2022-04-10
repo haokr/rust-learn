@@ -57,7 +57,3 @@ Let’s recap what we’ve discussed about references:
 
 - At any given time, you can have either one mutable reference or any number of immutable   references.
 - References must always be valid. 
-
----
-
-使用数据结构时，数据结构自身的生命周期要小于等于其内部字段的所有引用的生命周期。
