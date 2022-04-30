@@ -1,0 +1,80 @@
+**多态：**
+1. 动态类型系统，通过鸭子类型实现
+2. 静态类型系统通过
+    - 参数多态（paramertic polymorphism），指代码操作的类型是一个满足某些约束的参数，而非具体的类型
+    - 特设多态（adhoc polymorphism），指同一种行为有多个不同实现的多态，比如加法，可以 1+1，也可以 abc + def
+    - 子类型多态（subtype polymorphism），指在运行时，子类型可以被当成父类型使用
+
+Rust 中参数多态使用泛型来支持，特设多态通过 trait 支持，子类型多态使用 trait object 来支持。
+
+**类型系统基本概念：**  
+![类型体统基本概念](https://static001.geekbang.org/resource/image/09/15/09ea90a4df9fb7652389f611412c1715.jpg?wh=3175x1490)
+
+Rust 是强类型语言，且静态类型检查。
+
+从内存角度看，类型安全是指代码，只能按照被允许的方法，访问它被授予访问权限的内存。
+
+C/C++ 定义后数据可以隐式转换，是弱类型语言，不是内存安全的。而像 Rust 这样的强类型语言，是类型安全的。
+
+Rust 中除了 let/fn/static/const 这些定义性的语句外，都是表达式，像
+```rust
+if has_work {
+    do_something();
+}
+```
+这样的，返回值是 unit，它的值和类型都是 `()`.
+
+在 Rust 中对于一个作用域，无论是 if/for 还是番薯，最后一个表达式的返回值就是作用域的返回值，如果表达式不返回任何值，那么它返回一个 `unit()`.
+
+**类型推导：**
+
+有些情况下，即使上下文中含有类型的信息，也需要开发者为变量提供类型，比如常量和静态变量的定义。
+```rust
+const PI: f64 = 3.1415926;
+static E: f32 = 2.71828;
+
+fn main() {
+    const V: u32 = 10;
+    static V1: &str = "hello";
+    println!("PI: {}, E: {}, V: {}, V1: {}", PI, E, V, V1);
+}
+```
+
+**泛型数据结构**  
+
+```rust
+enum Option<T> {
+    Some(T),
+    None,
+}
+```
+
+```rust
+pub struct Vec<T, A: Allocator = Global> {
+    buf: RawVec<T, A>,
+    len: usize,
+}
+
+pub struct RawVec<T, A: Allocator = Global> {
+    ptr: Unique<T>,
+    cap: usize,
+    alloc: A,
+}
+```
+
+生命周期标注也是泛型的一部分。
+```rust
+pub enum Cow<'a, B: ?Sized + 'a> where B : ToOwned,
+{
+    // 借用的数据
+    Borrowed(&'a B),
+    // 拥有的数据
+    Owned(<B as ToOwned>::Owned),
+}
+```
+
+也可以在不同的实现下逐步添加约束。
+
+**泛型函数**
+
+泛型函数在编译时会单态化，这使代码执行效率变高，同时也使二进制文件变大，编译速度变慢。同时，编译后的代码会丢弃泛型信息。因此，分发带有泛型的代码时，不能以二进制文件形式分发，需要分发源码。
