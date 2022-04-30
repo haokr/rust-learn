@@ -21,5 +21,5 @@ pub fn strtok<'a>(s: &'a mut &str, delimiter: char) -> &'a str {
         let prefix = *s;
         *s = "";
         prefix
-    }
+    }Result
 }
