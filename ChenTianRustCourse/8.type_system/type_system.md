@@ -78,3 +78,24 @@ pub enum Cow<'a, B: ?Sized + 'a> where B : ToOwned,
 **泛型函数**
 
 泛型函数在编译时会单态化，这使代码执行效率变高，同时也使二进制文件变大，编译速度变慢。同时，编译后的代码会丢弃泛型信息。因此，分发带有泛型的代码时，不能以二进制文件形式分发，需要分发源码。
+
+**Trait Object**
+![Trait Object 实现机理](https://static001.geekbang.org/resource/image/49/1d/4900097edab0yye11233e14ef857be1d.jpg?wh=2248x1370)
+
+HtmlFormatter 的引用赋值给 Formatter 后，会生成一个 Trait Object，在上图中可以看到，Trait Object 的底层逻辑就是胖指针。其中，一个指针指向数据本身，另一个则指向虚函数表（vtable）。
+
+vtable 是一张静态的表，Rust 在编译时会为使用了 trait object 的类型的 trait 实现生成一张表，放在可执行文件中（一般在 TEXT 或 RODATA 段）。
+
+![vtable](https://static001.geekbang.org/resource/image/9d/5e/9ddeafee9740e891f6bf9c1584e6905e.jpg?wh=2389x1738)
+
+所以 Rust 里的 Trait Object 是 C++/Java 中的 vtable 的一个变体。
+
+但是，只有满足对象安全的 trait 才能使用 trait object。[文档](https://doc.rust-lang.org/book/ch17-02-trait-objects.html)
+
+如果 trait 所有的方法，返回值是 Self 或带有泛型参数，那么这个 trait 就不能产生 trait object。
+
+不允许返回 Self，是因为 trait object 在产生时，原来的类型会被抹去，所以 Self 究竟是谁不知道。比如 Clone trait 只有一个方法 clone()，返回 Self，所以它就不能产生 trait object。
+
+不允许携带泛型参数，是因为 Rust 里带泛型的类型在编译时会做单态化，而 trait object 是运行时的产物，两者不能兼容。
+
+疑问：trait object 不是根据具体的类型生成的吗？trait 泛型和 Self 经过单态化，在生成时不是可以根据具体类型得到吗？，为什么不能确定呢？
