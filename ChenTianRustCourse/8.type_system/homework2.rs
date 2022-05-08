@@ -28,20 +28,10 @@ impl<T> Index<isize> for List<T> {
     type Output = T;
 
     fn index(&self, index: isize) -> &Self::Output {
-        let len: i64 = self.0.len() as i64;
-        let mut nindex = index as i64;
-        while nindex >= len {
-            nindex -= len;
-        }
-        while nindex < 0 {
-            nindex += len;
-        }
-        let mut iter = self.0.iter();
-        let mut n = iter.next();
-        for _ in 0..nindex {
-            n = iter.next();
-        }
-        n.unwrap()
+        let len = self.len() as isize;
+        let n = (len + index % len) % len;
+        let iter = self.iter();
+        iter.skip(n as usize).next().unwrap()
     }
 }
 
