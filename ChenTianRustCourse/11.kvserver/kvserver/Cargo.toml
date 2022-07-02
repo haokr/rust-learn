@@ -9,6 +9,7 @@ prost = "0.8" # 处理 protobuf 的代码
 tracing = "0.1" # 日志处理
 thiserror = "*"
 dashmap = "5"
+http = "0.2"
 
 [dev-dependencies]
 anyhow = "1" # 错误处理
