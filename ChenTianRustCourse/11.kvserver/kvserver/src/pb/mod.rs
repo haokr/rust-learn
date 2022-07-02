@@ -1,8 +1,9 @@
 pub mod abi;
 
 use abi::{command_request::RequestData, *};
+use http::StatusCode;
 
-use crate::{KvError, error::StatusCode};
+use crate::{KvError};
 
 impl CommandRequest {
     pub fn new_hset(table: impl Into<String>, key: impl Into<String>, value: Value) -> Self {
