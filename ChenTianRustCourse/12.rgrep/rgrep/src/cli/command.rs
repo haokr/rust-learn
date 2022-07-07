@@ -4,7 +4,7 @@ use clap::Parser;
 #[clap(author, version, about, long_about = None)]
 pub struct Command {
     #[clap(value_parser)]
-    file: String,
+    pub file: String,
     #[clap(value_parser)]
-    targe_string: String,
+    pub targe_string: String,
 }

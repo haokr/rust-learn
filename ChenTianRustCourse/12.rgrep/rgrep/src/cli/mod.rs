@@ -25,6 +25,6 @@ where S: Service
         let req = Request {
             cmd: &self.cmd
         };
-        <S as Service>::fetch(req)
+        <S as Service>::fetch(&self.service, req)
     }
 }
