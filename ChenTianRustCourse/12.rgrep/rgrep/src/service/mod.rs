@@ -10,14 +10,14 @@ pub trait Service {
     fn fetch(&self, req: Request) -> Response {
         match self.match_file(&req) {
             Some(files) => self.multi_match_file(&req, &files),
-            None => Response { status: 200, ..Default::default() }
+            None => Response { status: 200, message: "File Not Found".into(), ..Default::default() }
         }
     }
     
     fn multi_match_file<'a>(&self, req: &Request, files: &Vec<String>) -> Response {
         let mut res:  HashMap<String, Vec<Fetch_Result>> = HashMap::new();
         for f in files {
-            let match_res = self.match_str(&req, f);
+            let match_res = self.match_str(req, f);
             match match_res {
                 Some(mr) => res.insert(f.clone(), mr),
                 None => None
