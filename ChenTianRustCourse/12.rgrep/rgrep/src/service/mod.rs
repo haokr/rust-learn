@@ -2,11 +2,13 @@ mod data;
 mod simple_service;
 
 use std::collections::HashMap;
+use std::path::PathBuf;
 
-pub use simple_service::Simple_Service;
+pub use simple_service::SimpleService;
 pub use data::*;
 
 pub trait Service {
+    /// 外部调用
     fn fetch(&self, req: Request) -> Response {
         match self.match_file(&req) {
             Some(files) => self.multi_match_file(&req, &files),
@@ -14,13 +16,17 @@ pub trait Service {
         }
     }
     
-    fn multi_match_file<'a>(&self, req: &Request, files: &Vec<String>) -> Response {
-        let mut res:  HashMap<String, Vec<Fetch_Result>> = HashMap::new();
+    /// 多文件匹配
+    fn multi_match_file<'a>(&self, req: &Request, files: &Vec<PathBuf>) -> Response {
+        let mut res:  HashMap<String, Vec<FetchResult>> = HashMap::new();
         for f in files {
             let match_res = self.match_str(req, f);
             match match_res {
-                Some(mr) => res.insert(f.clone(), mr),
-                None => None
+                Ok(m) => match m {
+                    Some(mr) => res.insert(f.file_name().unwrap().to_str().unwrap().to_string(), mr),
+                    None => None
+                },
+                _ => None
             };
         }
         Response {
@@ -30,7 +36,9 @@ pub trait Service {
         }
     }
 
-    fn match_file(&self, req: &Request) -> Option<Vec<String>>;
+    /// 匹配正则表达式
+    fn match_file(&self, req: &Request) -> Option<Vec<PathBuf>>;
 
-    fn match_str(&self, req: &Request, file: &String) -> Option<Vec<Fetch_Result>>;
+    /// 匹配单个文件
+    fn match_str(&self, req: &Request, file: &PathBuf) -> Result<Option<Vec<FetchResult>>, String>;
 }

@@ -1,13 +1,13 @@
-use clap::Parser;
-
 use crate::cli::Cli;
+use show::show;
 
 mod cli;
 mod service;
+mod show;
 
 fn main() {
-    let s = service::Simple_Service::default();
+    let s = service::SimpleService::default();
     let cli = Cli::new(s);
     let res = cli.run();
-    println!("{:?}", res);
+    show(&res.res);
 }
