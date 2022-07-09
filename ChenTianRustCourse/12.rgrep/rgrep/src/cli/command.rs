@@ -6,5 +6,5 @@ pub struct Command {
     #[clap(value_parser)]
     pub file: String,
     #[clap(value_parser)]
-    pub targe_string: String,
+    pub target_string: String,
 }

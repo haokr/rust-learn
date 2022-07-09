@@ -61,7 +61,7 @@ impl SimpleService {
         for line in lines {
             line_num = line_num + 1;
             let content = line.unwrap();
-            let reg = Regex::new(req.cmd.targe_string.as_str()).unwrap();
+            let reg = Regex::new(req.cmd.target_string.as_str()).unwrap();
 
             let find_res = reg.find_iter(content.as_str());
             let mut pos: Vec<(usize, usize)> = vec!();
