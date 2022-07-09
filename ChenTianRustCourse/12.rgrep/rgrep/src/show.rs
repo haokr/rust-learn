@@ -7,7 +7,7 @@ pub fn show(data: &HashMap<String, Vec<FetchResult>>) {
         if e.1.is_empty() {
             return;
         }
-        println!("{}", format!("{}", e.0.blue()));
+        println!("{}", format!("{}", e.0.blue().bold()));
         for l in e.1 {
             let mut line = "\t".to_owned();
             let mut end: usize = 0;
