@@ -21,7 +21,7 @@ pub fn show(data: &HashMap<String, Vec<FetchResult>>) {
             }
             let ps = l.pos.iter().map(|e| e.0.to_string()).collect::<Vec<String>>();
             let pss = ps.join(".");
-            println!("    {}:{} {}", l.line, pss ,line);
+            println!("{}", format!("    {}:{} {}", l.line.to_string().cyan(), pss.to_string().yellow() ,line));
         }
     })
 }
