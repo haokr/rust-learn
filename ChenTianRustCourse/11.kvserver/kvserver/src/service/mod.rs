@@ -1,4 +1,4 @@
-use std::{process::Command, sync::Arc};
+use std::{sync::Arc};
 
 use tracing::debug;
 
