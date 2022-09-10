@@ -10,7 +10,6 @@ use tracing::info;
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    print!("Server running...");
     tracing_subscriber::fmt::init();
     let service: Service = Service::new(MemTable::new());
     let addr = "127.0.0.1:9527";
