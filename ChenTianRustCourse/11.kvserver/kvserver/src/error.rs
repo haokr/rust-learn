@@ -1,3 +1,5 @@
+use std::io::Error;
+
 use thiserror::Error;
 
 use crate::Value;
@@ -21,4 +23,7 @@ pub enum KvError {
 
     #[error("Internal error: {0}")]
     Internal(String),
+
+    #[error("Failed to encode frame")]
+    FrameError,
 }
