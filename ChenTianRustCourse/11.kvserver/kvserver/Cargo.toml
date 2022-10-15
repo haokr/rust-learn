@@ -21,6 +21,7 @@ async-prost = "0.2.1" # 支持吧 protobuf 封装成 tcp frame
 futures = "0.3" # 提供 Stream trait
 tracing-subscriber = "0.2" # 日志处理
 tokio-util = { version = "0.6", features = ["codec"] }
+certify = "0.3"
 
 [build-dependencies]
 prost-build = "0.8"
