@@ -26,4 +26,12 @@ pub enum KvError {
 
     #[error("Failed to encode frame")]
     FrameError,
+    #[error("Failed to encode frame")]
+    CertifcateParseError(String, String),
+}
+
+impl From<Error> for KvError {
+    fn from(e: Error) -> Self {
+        KvError::Internal(e.to_string())
+    }
 }
