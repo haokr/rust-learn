@@ -1,7 +1,7 @@
 use anyhow::Result;
 use bytes::Bytes;
 use futures::prelude::*;
-use kvserver::{CommandRequest, MemTable, Service};
+use kvserver::{CommandRequest, MemTable, Service, tls::TlsServerAcceptor};
 use prost::Message;
 use tokio::net::TcpListener;
 use tokio_util::codec::{LengthDelimitedCodec, Framed};
@@ -14,14 +14,23 @@ use tracing::info;
 #[tokio::main]
 async fn main() -> Result<()> {
     tracing_subscriber::fmt::init();
+
+    let server_cert = include_str!("../fixtures/server.cert");
+    let server_key = include_str!("../fixtures/server.key");
+
+    let acceptor = TlsServerAcceptor::new(server_cert, server_key, None)?;
+
     let service: Service = Service::new(MemTable::new());
     let addr = "127.0.0.1:9527";
     let listener = TcpListener::bind(addr).await?;
     info!("Start listening on {}", addr);
     loop {
+        let tls = acceptor.clone();
         let (stream, addr) = listener.accept().await?;
         info!("Client {:?} connected", addr);
         let svc = service.clone();
+
+        let stream = tls.accept(stream).await?;
 
         let mut stream = Framed::new(stream, LengthDelimitedCodec::new());        
 

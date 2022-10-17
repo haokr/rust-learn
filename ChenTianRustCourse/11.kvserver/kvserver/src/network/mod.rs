@@ -1,5 +1,5 @@
 mod frame;
-mod tls;
+pub mod tls;
 use bytes::Bytes;
 pub use frame::FrameCoder;
 
