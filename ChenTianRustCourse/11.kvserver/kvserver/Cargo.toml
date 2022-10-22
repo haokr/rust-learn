@@ -17,6 +17,7 @@ tokio = { version = "1", features = ["rt", "rt-multi-thread", "io-util", "macros
 tokio-rustls = "0.22"
 webpki-roots = "0.22"
 rustls-native-certs = "0.6"
+snow = "0.9"
 
 [dev-dependencies]
 anyhow = "1" # 错误处理
