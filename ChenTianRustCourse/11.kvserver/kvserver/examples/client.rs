@@ -4,6 +4,7 @@ use async_prost::AsyncProstStream;
 use futures::prelude::*;
 use kvserver::{CommandRequest, CommandResponse, tls::TlsClientConnector};
 use tokio::net::TcpStream;
+use tokio_rustls::client;
 use tracing::info;
 
 #[tokio::main]
@@ -14,7 +15,11 @@ async fn main() -> Result<()> {
 
     // ca 证书
     let ca_cert = include_str!("../fixtures/ca.cert");
-    let connector = TlsClientConnector::new("kvserver.acme.inc", None, Some(ca_cert))?;
+
+    let client_cert = include_str!("../fixtures/client.cert");
+    let client_key = include_str!("../fixtures/client.key");
+
+    let connector = TlsClientConnector::new("kvserver.acme.inc", Some((client_cert, client_key)), Some(ca_cert))?;
     
     // 连接服务器
     let stream = TcpStream::connect(addr).await?;
