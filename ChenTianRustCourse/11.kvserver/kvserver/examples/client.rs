@@ -4,7 +4,6 @@ use async_prost::AsyncProstStream;
 use futures::prelude::*;
 use kvserver::{CommandRequest, CommandResponse, tls::TlsClientConnector};
 use tokio::net::TcpStream;
-use tokio_rustls::client;
 use tracing::info;
 
 #[tokio::main]

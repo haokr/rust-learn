@@ -1,7 +1,7 @@
 use std::{sync::Arc, io::Cursor};
 
 use tokio::io::{AsyncRead, AsyncWrite};
-use tokio_rustls::{rustls::{ServerConfig, ClientConfig, NoClientAuth, RootCertStore, AllowAnyAuthenticatedClient, Certificate, internal::pemfile, PrivateKey, OwnedTrustAnchor}, webpki::{DNSNameRef, TLSServerTrustAnchors, trust_anchor_util}, TlsConnector};
+use tokio_rustls::{rustls::{ServerConfig, ClientConfig, NoClientAuth, RootCertStore, AllowAnyAuthenticatedClient, Certificate, internal::pemfile, PrivateKey, OwnedTrustAnchor}, webpki::{DNSNameRef}, TlsConnector};
 use tokio_rustls::{ client::TlsStream as ClientTlsStream, server::TlsStream as ServerTlsStream, TlsAcceptor,};
 use crate::KvError;
 
@@ -38,7 +38,7 @@ impl TlsClientConnector {
             let key = load_key(key)?;
             match config.set_single_client_cert(certs, key) {
                 Ok(it) => it,
-                Err(err) => return Err(KvError::CertifcateParseError("server".into(), "CA".into())),
+                Err(_err) => return Err(KvError::CertifcateParseError("server".into(), "CA".into())),
             };
         }
 

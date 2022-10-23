@@ -33,6 +33,7 @@ impl CommandService for Hgetall {
     }
 }
 
+#[warn(dead_code)]
 #[cfg(test)]
 mod tests {
     use crate::command_request::RequestData;

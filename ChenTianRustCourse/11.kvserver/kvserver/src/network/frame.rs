@@ -46,14 +46,14 @@ where
             let mut encoder = GzEncoder::new(payload.writer(), Compression::default());
             match encoder.write_all(&buf1[..]) {
                 Ok(it) => it,
-                Err(err) => return Err(KvError::FrameError),
+                Err(_) => return Err(KvError::FrameError),
             };
 
 
             // 压缩完成后，从 gzip encoder 中把 BytesMut 再拿回来
             let payload = match encoder.finish() {
                 Ok(it) => it,
-                Err(err) => return Err(KvError::FrameError),
+                Err(_) => return Err(KvError::FrameError),
             }.into_inner();
             debug!("Encode a frame: size {}({})", size, payload.len());
 
@@ -81,7 +81,7 @@ where
             let mut buf1 = Vec::with_capacity(len * 2);
             match decoder.read_to_end(&mut buf1) {
                 Ok(it) => it,
-                Err(err) => return Err(KvError::FrameError),
+                Err(_) => return Err(KvError::FrameError),
             };
             buf.advance(len);
 
@@ -109,7 +109,7 @@ where
 {
     let header = match stream.read_u32().await {
         Ok(it) => it,
-        Err(err) => return Err(KvError::FrameError),
+        Err(_) => return Err(KvError::FrameError),
     } as usize;
 
     let (len, _compressed) = decode_header(header);
@@ -123,7 +123,7 @@ where
     unsafe { buf.advance_mut(len) };
     match stream.read_exact(&mut buf[LEN_LEN..]).await {
         Ok(it) => it,
-        Err(err) => return Err(KvError::FrameError),
+        Err(_err) => return Err(KvError::FrameError),
     };
 
     Ok(())

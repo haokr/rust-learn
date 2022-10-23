@@ -165,7 +165,7 @@ mod tests {
             .fn_executed(|_| println!("executed"))
             .into();
 
-        let res = service.execute(CommandRequest::new_hset("t1", "k1", "v1".into()));
+        let _res = service.execute(CommandRequest::new_hset("t1", "k1", "v1".into()));
     }
 
     // 测试成功返回的结果

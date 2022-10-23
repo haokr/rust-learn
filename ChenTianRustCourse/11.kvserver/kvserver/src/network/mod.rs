@@ -1,5 +1,6 @@
 mod frame;
 pub mod tls;
+pub mod noise;
 use bytes::Bytes;
 pub use frame::FrameCoder;
 
