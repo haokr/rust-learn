@@ -41,6 +41,7 @@ fn my_channel<T>() -> (MySender<T>, MyReceiver<T>) {
     )
 }
 
+// 为接收者实现 stream
 impl<T> Stream for MyReceiver<T> {
     type Item = T;
 
@@ -49,6 +50,7 @@ impl<T> Stream for MyReceiver<T> {
     }
 }
 
+// 为发送者实现 sink
 impl<T> Sink<T> for MySender<T> {
     type Error = std::io::Error;
 
